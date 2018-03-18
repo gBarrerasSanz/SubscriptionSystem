@@ -1,24 +1,18 @@
 # Subscription API
 
-One Paragraph of project description goes here
-
-## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
 ### Prerequisites
 
 In order to build and run the application locally is required to have installed gradle, jdk8, docker and docker-compose.
 
 ### How to run the app
 
-#### This command will build the project, build the docker images and start all of containers using docker-compose. The public api for creating subscriptions will be in the address http://localhost:8080/api/subscriptions
-gradle run
+This command will build the project, build the docker images and start all of containers using docker-compose. The public api for creating subscriptions will be in the address http://localhost:8080/api/subscriptions
+#### gradle run
 
 ### Running the tests
 
-#### To perform some simple tests againts the exposed API, run the following command:
-gradle test -p apiTest
+To perform some simple tests againts the exposed API, run the following command:
+#### gradle test -p apiTest
 
 ### Stop the application
 
