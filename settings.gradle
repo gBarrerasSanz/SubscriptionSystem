@@ -1,0 +1,5 @@
+rootProject.name = 'subscriptionsystem'
+
+include 'common-model', ':api', 'subscriptionmanagerservice', 'persistenceservice', 'eventservice', 'emailservice'
+//include 'apiTest'
+

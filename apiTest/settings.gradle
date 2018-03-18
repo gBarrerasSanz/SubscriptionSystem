@@ -1,0 +1,3 @@
+
+include('common-model')
+project(':common-model').projectDir = new File(settingsDir, '../common-model')

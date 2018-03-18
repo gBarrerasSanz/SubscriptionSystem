@@ -1,0 +1,81 @@
+group = 'com.coding.challenge.subscriptionsystem'
+description = 'emailservice'
+version '1.0.0'
+
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.0.RELEASE")
+        classpath "gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.19.2"
+    }
+}
+
+apply plugin: "com.palantir.docker"
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'com.palantir.docker-run'
+
+task clientJar(type: Jar) {
+    from sourceSets.main.output
+}
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+
+dependencies {
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.0.0.RELEASE'
+    compile project(":common-model")
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+task copyRuntimeLibs(type: Copy) {
+    from "build/libs/emailservice-1.0.0.jar"
+    into "build/docker"
+}
+
+tasks.docker.dependsOn 'bootJar'
+tasks.docker.mustRunAfter 'bootJar'
+docker {
+    tasks.docker.doFirst {
+        tasks.copyRuntimeLibs.execute()
+    }
+    name 'com.coding.challenge/subscriptionsystem/emailservice:1.0.0'
+    tags 'latest'
+    dockerfile file('src/main/docker/Dockerfile')
+    buildArgs([BUILD_VERSION: 'version', 'JAR_FILE': "emailservice-1.0.0.jar"])
+    labels(['key': 'value'])
+    noCache true
+}
+
+
+tasks.dockerRun.dependsOn 'docker'
+tasks.dockerRun.mustRunAfter 'docker'
+dockerRun {
+    name 'emailservice-container'
+    image 'com.coding.challenge/subscriptionsystem/emailservice:1.0.0'
+    ports ['7080:5000, 8081:8080']
+    daemonize true
+    env 'MYVAR1': 'MYVALUE1', 'MYVAR2': 'MYVALUE2'
+    command 'sleep', '100'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src/main/java'
+        }
+        resources {
+            srcDir 'src/main/resources'
+        }
+    }
+}

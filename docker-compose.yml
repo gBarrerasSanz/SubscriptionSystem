@@ -1,0 +1,28 @@
+version: '2'
+services:
+  api:
+    ports:
+      - "8080:8080"
+    image: 'com.coding.challenge/subscriptionsystem/api:1.0.0'
+    container_name: 'api-container'
+    links:
+      - subscriptionmanagerservice
+  subscriptionmanagerservice:
+    image: 'com.coding.challenge/subscriptionsystem/subscriptionmanagerservice:1.0.0'
+    container_name: 'subscriptionmanagerservice-container'
+    links:
+      - persistenceservice
+      - eventservice
+  persistenceservice:
+    image: 'com.coding.challenge/subscriptionsystem/persistenceservice:1.0.0'
+    container_name: 'persistenceservice-container'
+  eventservice:
+    image: 'com.coding.challenge/subscriptionsystem/eventservice:1.0.0'
+    container_name: 'eventservice-container'
+    ports:
+          - "8081:8080"
+    links:
+      - emailservice
+  emailservice:
+    image: 'com.coding.challenge/subscriptionsystem/emailservice:1.0.0'
+    container_name: 'emailservice-container'

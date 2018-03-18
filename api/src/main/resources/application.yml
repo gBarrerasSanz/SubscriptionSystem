@@ -1,0 +1,6 @@
+server:
+  port: 8080
+  servlet:
+    contextPath: /
+  tomcat:
+    max-threads: 100
