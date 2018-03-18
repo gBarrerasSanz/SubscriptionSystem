@@ -22,6 +22,9 @@ sourceSets {
     }
 }
 
+//test {
+//    testLogging.showStandardStreams = true
+//}
 
 dependencies {
     compile project(":common-model")

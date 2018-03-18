@@ -26,6 +26,7 @@ public class ApiTest {
     private HttpHeaders headersBasicUser;
     private HttpHeaders headersFrontendUser;
 
+
     private final static String URL_ENDPOINT = "http://localhost:8080/api/subscriptions";
 
     private static HttpHeaders createHeaders(String username, String password){
@@ -41,7 +42,7 @@ public class ApiTest {
     @Before
     public void init(){
         headersBasicUser = createHeaders("BASIC_USER", "BASIC_USER");
-        headersFrontendUser = createHeaders("FRONTEND_USER", "FRONTEND_USER");
+        headersFrontendUser = createHeaders("FRONTEND_APP", "FRONTEND_APP");
     }
 
     private static ResponseEntity<ApiCreateSubscriptionResponse> postRequestWithNoHeaders(ApiCreateSubscriptionRequest apiCreateSubscriptionRequest, HttpHeaders headers){
@@ -110,7 +111,7 @@ public class ApiTest {
     @Test(timeout = 15000)
     public void createOneNew(){
         ResponseEntity<ApiCreateSubscriptionResponse> apiCreateSubscriptionResponse =
-                postRequestWithNoHeaders(new ApiCreateSubscriptionRequest(buildUser("usernew"+String.valueOf(new Random().nextInt(9999))+"@gmail.com", "User 01"),
+                postRequestWithNoHeaders(new ApiCreateSubscriptionRequest(buildUser("createOneNew"+String.valueOf(new Random().nextInt(9999))+"@gmail.com", "User 01"),
                         buildNewsletter("newsletter01")), headersFrontendUser);
         assertEquals(apiCreateSubscriptionResponse.getStatusCode(), HttpStatus.CREATED);
         assertNotNull(apiCreateSubscriptionResponse.getBody());

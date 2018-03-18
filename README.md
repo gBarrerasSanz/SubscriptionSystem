@@ -16,8 +16,8 @@ To perform some simple tests againts the exposed API, run the following command:
 
 ### Stop the application
 
-#### Once docker-compose is stopped with Ctrl+C, stop and remove the created containers using the following command:
-gradle cleanContainers
+Once docker-compose is stopped with Ctrl+C, stop and remove the created containers using the following command:
+#### gradle cleanContainers
 
 ### Description of microservices
 #### These are the services. They are all deployed in different docker containers, and they communicate with each other using http protocol:
